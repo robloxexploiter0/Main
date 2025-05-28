@@ -56,12 +56,5 @@ AddContent("Toogle", "Auto Race", [[local args = {
 }
 
 game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("FightService"):WaitForChild("RE"):WaitForChild("FightReady"):FireServer(unpack(args))
-
-local args = {
-    [1] = "Area_2",
-    [2] = "Area_21748439706_63",
-    [3] = 12
-}
-
-game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("FightService"):WaitForChild("RE"):WaitForChild("FinishFight"):FireServer(unpack(args))
+game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("FightService"):WaitForChild("RE"):WaitForChild("TimeBonus"):FireServer()
 ]])
