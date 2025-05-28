@@ -56,7 +56,8 @@ local args = {
     [1] = "Area_1"
 }
 
-game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("FightService"):WaitForChild("RE"):WaitForChild("FightReady"):FireServer(unpack(args)) = local args = {
+game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("FightService"):WaitForChild("RE"):WaitForChild("FightReady"):FireServer(unpack(args))
+    local args = {
     [1] = "Area_1",
     [2] = "Area_11748438901_51",
     [3] = 12
