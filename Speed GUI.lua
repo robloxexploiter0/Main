@@ -30,7 +30,7 @@ button.TextSize = 18
 button.Parent = gui
 button.Draggable = true
 
-local fastSpeed = 50
+local fastSpeed = 100
 local normalSpeed = 16
 local enabled = false
 
