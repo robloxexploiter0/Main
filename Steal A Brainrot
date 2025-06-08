@@ -9,3 +9,29 @@ ProximityPromptService.PromptButtonHoldBegan:Connect(function(prompt, player)
         fireproximityprompt(prompt)
     end
 end)]])
+
+AddContent("TextButton", "Complete Steal", [[local TweenService = game:GetService("TweenService")
+local Players = game:GetService("Players")
+
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local hrp = character:WaitForChild("HumanoidRootPart")
+
+local destination = Vector3.new(-348.364319, -6.6010685, 6.88513994, 0.00608276995, -1.54376079e-09, -0.999981523, -3.68200026e-09, 1, -1.56618651e-09, 0.999981523, 3.69145892e-09, 0.00608276995)
+local newCFrame = CFrame.new(destination)
+
+local tweenInfo = TweenInfo.new(
+    2,
+    Enum.EasingStyle.Quad,
+    Enum.EasingDirection.Out
+)
+
+local goal = { CFrame = newCFrame }
+
+hrp.Anchored = true
+local tween = TweenService:Create(hrp, tweenInfo, goal)
+tween:Play()
+
+tween.Completed:Connect(function()
+    hrp.Anchored = false
+end)]])
