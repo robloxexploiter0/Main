@@ -1,30 +1,11 @@
 loadstring(game:HttpGet('https://raw.githubusercontent.com/GhostPlayer352/UI-Library/refs/heads/main/Ghost%20Gui'))()
 game.CoreGui.GhostGui.MainFrame.Title.Text = "Steal A Brainrot"
 
-AddContent("TextButton", "Complete Steal", [[
-local TweenService = game:GetService("TweenService")
-local Players = game:GetService("Players")
+AddContent("TextButton", "Instant Interact", [[local ProximityPromptService = game:GetService("ProximityPromptService")
+local instantInteractEnabled = true
 
-local player = Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local hrp = character:WaitForChild("HumanoidRootPart")
-
-local destination = Vector3.new(-472.296448, -6.60106897, -100.601723, -0.00310828676, 1.4076905e-08, 0.999995172, -9.52439105e-09, 1, -1.41065781e-08, -0.999995172, -9.56819246e-09, -0.00310828676) -- Target position
-local newCFrame = CFrame.new(destination)
-
-local tweenInfo = TweenInfo.new(
-    2, -- seconds
-    Enum.EasingStyle.Quad,
-    Enum.EasingDirection.Out
-)
-
-local goal = { CFrame = newCFrame }
-
-hrp.Anchored = true
-local tween = TweenService:Create(hrp, tweenInfo, goal)
-tween:Play()
-
-tween.Completed:Connect(function()
-    hrp.Anchored = false
-end)
-]])
+ProximityPromptService.PromptButtonHoldBegan:Connect(function(prompt, player)
+    if instantInteractEnabled then
+        fireproximityprompt(prompt)
+    end
+end)]])
