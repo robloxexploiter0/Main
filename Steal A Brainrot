@@ -17,7 +17,7 @@ local player = Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local hrp = character:WaitForChild("HumanoidRootPart")
 
-local destination = Vector3.new(-348.364319, -6.6010685, 6.88513994, 0.00608276995, -1.54376079e-09, -0.999981523, -3.68200026e-09, 1, -1.56618651e-09, 0.999981523, 3.69145892e-09, 0.00608276995)
+local destination = Vector3.new(-339.331482, -5.10106802, 6.63979149, 0.00194449432, 5.02210327e-08, -0.999998093, 6.91877755e-09, 1, 5.02345827e-08, 0.999998093, -7.01644565e-09, 0.00194449432)
 local newCFrame = CFrame.new(destination)
 
 local tweenInfo = TweenInfo.new(
