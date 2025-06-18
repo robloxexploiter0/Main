@@ -1,66 +1,104 @@
 local Library = {}
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+local Mouse = Player:GetMouse()
 
-function Library:CreateWindow(title)
-    local screenGui = Instance.new("ScreenGui", game.Players.LocalPlayer.PlayerGui)
-    screenGui.Name = title
+function Library:CreateWindow(name)
+    local gui = Instance.new("ScreenGui", Player:WaitForChild("PlayerGui"))
+    gui.Name = name
+    gui.ResetOnSpawn = false
 
-    local main = Instance.new("Frame", screenGui)
-    main.Size = UDim2.new(0, 400, 0, 300)
-    main.Position = UDim2.new(0.5, -200, 0.5, -150)
-    main.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+    local main = Instance.new("Frame", gui)
+    main.Size = UDim2.new(0, 500, 0, 350)
+    main.Position = UDim2.new(0.5, -250, 0.5, -175)
+    main.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
     main.BorderSizePixel = 0
     main.Name = "Main"
+    main.Active = true
+    main.Draggable = true
 
-    local titleLabel = Instance.new("TextLabel", main)
-    titleLabel.Size = UDim2.new(1, 0, 0, 40)
-    titleLabel.Text = title
-    titleLabel.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-    titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-    titleLabel.Font = Enum.Font.SourceSansBold
-    titleLabel.TextSize = 24
-    titleLabel.BorderSizePixel = 0
+    local topbar = Instance.new("Frame", main)
+    topbar.Size = UDim2.new(1, 0, 0, 40)
+    topbar.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+    topbar.BorderSizePixel = 0
 
-    local layout = Instance.new("UIListLayout", main)
-    layout.Padding = UDim.new(0, 5)
-    layout.SortOrder = Enum.SortOrder.LayoutOrder
-    layout.HorizontalAlignment = Enum.HorizontalAlignment.Left
+    local title = Instance.new("TextLabel", topbar)
+    title.Text = name
+    title.Font = Enum.Font.GothamBold
+    title.TextSize = 20
+    title.TextColor3 = Color3.fromRGB(255, 255, 255)
+    title.BackgroundTransparency = 1
+    title.Size = UDim2.new(1, 0, 1, 0)
 
-    function main:CreateTab(tabName)
-        local tab = Instance.new("Frame", main)
-        tab.Size = UDim2.new(1, -10, 0, 25)
-        tab.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-        tab.BorderSizePixel = 0
-        tab.Name = tabName
+    local tabButtons = Instance.new("Frame", main)
+    tabButtons.Position = UDim2.new(0, 0, 0, 40)
+    tabButtons.Size = UDim2.new(0, 120, 1, -40)
+    tabButtons.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+    tabButtons.BorderSizePixel = 0
 
-        local label = Instance.new("TextLabel", tab)
-        label.Size = UDim2.new(1, 0, 1, 0)
-        label.Text = tabName
-        label.TextColor3 = Color3.fromRGB(255, 255, 255)
-        label.Font = Enum.Font.SourceSans
-        label.TextSize = 18
-        label.BackgroundTransparency = 1
+    local contentFrame = Instance.new("Frame", main)
+    contentFrame.Position = UDim2.new(0, 120, 0, 40)
+    contentFrame.Size = UDim2.new(1, -120, 1, -40)
+    contentFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+    contentFrame.BorderSizePixel = 0
 
-        function tab:CreateButton(text, callback)
-            local button = Instance.new("TextButton", main)
-            button.Size = UDim2.new(1, -10, 0, 30)
-            button.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-            button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    local tabList = {}
+
+    function Library:CreateTab(tabName)
+        local tabBtn = Instance.new("TextButton", tabButtons)
+        tabBtn.Size = UDim2.new(1, 0, 0, 35)
+        tabBtn.Text = tabName
+        tabBtn.Font = Enum.Font.Gotham
+        tabBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+        tabBtn.TextSize = 16
+        tabBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+        tabBtn.BorderSizePixel = 0
+
+        local tabFrame = Instance.new("ScrollingFrame", contentFrame)
+        tabFrame.Size = UDim2.new(1, 0, 1, 0)
+        tabFrame.BackgroundTransparency = 1
+        tabFrame.Visible = false
+        tabFrame.BorderSizePixel = 0
+        tabFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
+        tabFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
+        tabFrame.ScrollBarThickness = 4
+
+        local layout = Instance.new("UIListLayout", tabFrame)
+        layout.Padding = UDim.new(0, 6)
+        layout.SortOrder = Enum.SortOrder.LayoutOrder
+
+        tabBtn.MouseButton1Click:Connect(function()
+            for _, v in pairs(tabList) do
+                v.frame.Visible = false
+            end
+            tabFrame.Visible = true
+        end)
+
+        local tabAPI = {}
+
+        function tabAPI:CreateButton(text, callback)
+            local button = Instance.new("TextButton", tabFrame)
+            button.Size = UDim2.new(1, -10, 0, 35)
             button.Text = text
-            button.Font = Enum.Font.SourceSans
-            button.TextSize = 18
+            button.Font = Enum.Font.Gotham
+            button.TextColor3 = Color3.fromRGB(255, 255, 255)
+            button.TextSize = 16
+            button.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+            button.BorderSizePixel = 0
             button.MouseButton1Click:Connect(callback)
         end
 
-        function tab:CreateToggle(text, callback)
-            local toggled = false
-            local toggle = Instance.new("TextButton", main)
-            toggle.Size = UDim2.new(1, -10, 0, 30)
-            toggle.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-            toggle.TextColor3 = Color3.fromRGB(255, 255, 255)
+        function tabAPI:CreateToggle(text, callback)
+            local toggle = Instance.new("TextButton", tabFrame)
+            toggle.Size = UDim2.new(1, -10, 0, 35)
             toggle.Text = text .. ": OFF"
-            toggle.Font = Enum.Font.SourceSans
-            toggle.TextSize = 18
+            toggle.Font = Enum.Font.Gotham
+            toggle.TextColor3 = Color3.fromRGB(255, 255, 255)
+            toggle.TextSize = 16
+            toggle.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+            toggle.BorderSizePixel = 0
 
+            local toggled = false
             toggle.MouseButton1Click:Connect(function()
                 toggled = not toggled
                 toggle.Text = text .. ": " .. (toggled and "ON" or "OFF")
@@ -68,10 +106,15 @@ function Library:CreateWindow(title)
             end)
         end
 
-        return tab
+        tabList[tabName] = {frame = tabFrame}
+        if #contentFrame:GetChildren() <= 2 then
+            tabFrame.Visible = true
+        end
+
+        return tabAPI
     end
 
-    return main
+    return Library
 end
 
 return Library
