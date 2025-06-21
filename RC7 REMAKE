@@ -105,7 +105,7 @@ exe.MouseButton1Down:Connect(function()
 	else
 		output.Text = "Invalid Script/Argument"
 	end
-	wait(2)
+	wait(3.5)
 	output.Text = ""
 end)
 
