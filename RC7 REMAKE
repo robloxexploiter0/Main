@@ -94,13 +94,16 @@ exe.TextSize = 14.000
 exe.MouseButton1Down:Connect(function()
 	local trimmedText = trim(input.Text)
 	if trimmedText ~= "" then
-		local success, err = pcall(function()
-			loadstring(trimmedText)()
-		end)
-		if success then
-			output.Text = "Ran the script successfully!"
+		local loaded, loadErr = loadstring(trimmedText)
+		if loaded then
+			local success, execErr = pcall(loaded)
+			if success then
+				output.Text = "Ran the script successfully!"
+			else
+				output.Text = "Something went wrong"
+			end
 		else
-			output.Text = "Attempt To Call A Nil Value"
+			output.Text = "Error: " .. tostring(loadErr)
 		end
 	else
 		output.Text = "Invalid Script/Argument"
