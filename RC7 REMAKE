@@ -100,7 +100,7 @@ exe.MouseButton1Down:Connect(function()
 			if success then
 				output.Text = "Ran the script successfully!"
 			else
-				output.Text = "Something went wrong"
+				output.Text = "Error: " .. tostring(execErr)
 			end
 		else
 			output.Text = "Error: " .. tostring(loadErr)
