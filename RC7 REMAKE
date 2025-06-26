@@ -137,12 +137,11 @@ exe.MouseButton1Down:Connect(function()
             output.Text = "Module not found"
         end
     end
-end)
+end
 
 task.delay(3.5, function()
         output.Text = ""
     end)
-end
 
 clear.Name = "clear"
 clear.Parent = mainpage
