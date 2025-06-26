@@ -114,7 +114,6 @@ exe.MouseButton1Down:Connect(function()
     end
 end)
 
--- Add require() functionality
 exe.MouseButton1Down:Connect(function()
     local module = input.Text:match("^%s*require%(%s*(.*%s*)%)$")
     if module then
