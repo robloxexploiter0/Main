@@ -139,6 +139,11 @@ exe.MouseButton1Down:Connect(function()
     end
 end)
 
+task.delay(3.5, function()
+        output.Text = ""
+    end)
+end
+
 clear.Name = "clear"
 clear.Parent = mainpage
 clear.BackgroundTransparency = 1
