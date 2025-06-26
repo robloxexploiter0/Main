@@ -102,21 +102,42 @@ exe.Text = "Execute"
 exe.TextColor3 = Color3.fromRGB(20, 212, 255)
 exe.TextSize = 14
 exe.MouseButton1Down:Connect(function()
-	local code = input.Text:match("^%s*(.-)%s*$")
-	if code ~= "" then
-		local func, err = loadstring(code)
-		if func then
-			local success, execErr = pcall(func)
-			output.Text = success and "Ran the script successfully!" or "Error: " .. tostring(execErr)
-		else
-			output.Text = "Error: " .. tostring(err)
-		end
-	else
-		output.Text = "Invalid Script/Argument"
-	end
-	task.delay(3.5, function()
-		output.Text = ""
-	end)
+    local code = input.Text:match("^%s*(.-)%s*$")
+    if code ~= "" then
+        local func, err = loadstring(code)
+        if func then
+            local success, execErr = pcall(func)
+            output.Text = success and "Ran the script successfully!" or "Error: " .. tostring(execErr)
+        else
+            output.Text = "Error: " .. tostring(err)
+        end
+    end
+end)
+
+-- Add require() functionality
+exe.MouseButton1Down:Connect(function()
+    local module = input.Text:match("^%s*require%(%s*(.*%s*)%)$")
+    if module then
+        local path = module:match("^(.+)%..+$")
+        local file = io.open(path .. ".lua", "rb")
+        if file then
+            local code = file:read("*a")
+            file:close()
+            local requireFunc = loadstring(code)
+            if requireFunc then
+                local result, err = pcall(requireFunc)
+                if result then
+                    output.Text = "Loaded module successfully!"
+                else
+                    output.Text = "Error: " .. tostring(err)
+                end
+            else
+                output.Text = "Invalid module path"
+            end
+        else
+            output.Text = "Module not found"
+        end
+    end
 end)
 
 clear.Name = "clear"
